@@ -8,9 +8,11 @@ pip3 install -r requirements.txt
 sudo python3 app.py
 # Building and running 2 tier web application locally
 ### Building mysql docker image 
-```docker build -t my_db -f Dockerfile_mysql . ```
+```cd db```
+```docker build -t my_db -f Dockerfile . ```
 
 ### Building application docker image 
+```cd app```
 ```docker build -t my_app -f Dockerfile . ```
 
 ### Running mysql
@@ -44,4 +46,6 @@ export APP_COLOR=blue
 ```
 Edit the .env file to reflect desired environment variables
 docker compose up -d
+OR
+docker-compose up -d
 ```
