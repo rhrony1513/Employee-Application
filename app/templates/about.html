@@ -1,6 +1,10 @@
 <!doctype html>
 <title>Hello from Flask</title>
-<body style="background: {{ color }};"></body>
+{% if image %}
+  <body style="background-image: url(./default.jpg);"></body>
+{% else %}
+  <body style="background: #c769d6aa;"></body>
+{% endif %}
 <div style="color: #e4e4e4;
     text-align:  center;
     height: 90px;
