@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-db
+  namespace: final
+  labels:
+    tier: backend
+    app: app-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-db
+  template:
+    metadata:
+      labels:
+        app: app-db
+    spec:
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: ebs-claim
+      containers:
+      - name: app-db
+        image: [ecr/repo]
+        volumeMounts:
+        - name: app-data
+          mountPath: /app/data
+        ports:
+        - containerPort: 3306
+        env:
+          - name: DBPWD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-root-password  # Name of the Secret
+                key: DBPWD   # Key in the Secret
+      imagePullSecrets:
+      - name: ecr-secret
