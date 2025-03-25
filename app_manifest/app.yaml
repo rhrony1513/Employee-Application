@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app
+  name: myapp
   namespace: final
   labels:
     tier: frontend
@@ -20,6 +20,11 @@ spec:
         image: [ecr/repo]
         ports:
         - containerPort: 81
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
         env:
           - name: DBHOST
             valueFrom:

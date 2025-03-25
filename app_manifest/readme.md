@@ -24,3 +24,9 @@ aws ec2 create-volume --volume-type gp2 --size 20 --availability-zone us-east-1a
 ```
 eksctl create addon --name aws-ebs-csi-driver --cluster [name] --service-account-role-arn arn:aws:iam::[awsid]:role/LabRole –force
 ```
+
+# Deploy Metric Server for HPA
+
+```
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```

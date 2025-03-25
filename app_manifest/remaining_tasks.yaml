@@ -6,7 +6,4 @@ access your S3 private bucket storing the background image
 read namespaces. Create a binding (RoleBinding or ClusterRoleBinding, whichever appropriate) that 
 binds the “CLO835” role to the clo835 serviceaccount
 
-3 - Bonus: Deploy metrics monitor and HPA, update your manifests and demonstrate pods auto-scaling 
-as a response to the traffic load.
-
 4 - Bonus: add deployment automation with Flux.
