@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: [ecr/repo]
+        ports:
+        - containerPort: 81
+        env:
+          - name: DBHOST
+            valueFrom:
+              configMapKeyRef:
+                name: app-config      # Name of the ConfigMap
+                key: DBHOST  
+          - name: APP_COLOR
+            valueFrom:
+              configMapKeyRef:
+                name: app-config      # Name of the ConfigMap
+                key: APP_COLOR  
+          - name: APP_IMG
+            valueFrom:
+              configMapKeyRef:
+                name: app-config      # Name of the ConfigMap
+                key: APP_IMG
+          - name: APP_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: app-config      # Name of the ConfigMap
+                key: APP_PORT
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-db
+  labels:
+    tier: backend
+    app: app-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-db
+  template:
+    metadata:
+      labels:
+        app: app-db
+    spec:
+      containers:
+      - name: app-db
+        image: [ecr/repo]
+        ports:
+        - containerPort: 3306
+        env:
+          - name: DBPWD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-root-password  # Name of the Secret
+                key: DBPWD   # Key in the Secret

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-svc
+spec:
+  ports:
+  - port: 81
+    targetPort: 81
+  selector:
+    tier: app
+  type: NodePort
