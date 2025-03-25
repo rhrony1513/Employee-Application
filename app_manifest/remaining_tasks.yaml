@@ -1,9 +1,0 @@
-# Remaining tasks
-1 - · Create serviceaccount named “clo835” with IRSA (IAM Roles for Serviceaccounts) permissions to 
-access your S3 private bucket storing the background image
-
-2 - · K8s role (Role or ClusterRole, whichever is appropriate) “CLO835” with permissions to create and 
-read namespaces. Create a binding (RoleBinding or ClusterRoleBinding, whichever appropriate) that 
-binds the “CLO835” role to the clo835 serviceaccount
-
-4 - Bonus: add deployment automation with Flux.
