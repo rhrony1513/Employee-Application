@@ -40,7 +40,7 @@ export DBPWD=pw
 export APP_COLOR=blue
 ```
 ### Run the application, make sure it is visible in the browser
-```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
+```docker run -p 8080:81  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
 
 ### Running the application using using docker compose
 ```
