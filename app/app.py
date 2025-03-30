@@ -50,7 +50,7 @@ def DownloadImage():
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', image=IMAGE_FROM_ENV)
+    return render_template('addemp.html', image=IMAGE_FROM_ENV, name=NAME_FROM_ENV)
 
 @app.route("/about", methods=['GET','POST'])
 def about():
@@ -76,11 +76,11 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('addempoutput.html', name=emp_name, image=IMAGE_FROM_ENV)
+    return render_template('addempoutput.html', empname=emp_name, image=IMAGE_FROM_ENV, name=NAME_FROM_ENV)
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", image=IMAGE_FROM_ENV)
+    return render_template("getemp.html", image=IMAGE_FROM_ENV, name=NAME_FROM_ENV)
 
 @app.route("/fetchdata", methods=['GET','POST'])
 def FetchData():
@@ -108,7 +108,7 @@ def FetchData():
         cursor.close()
 
     return render_template("getempoutput.html", id=output["emp_id"], fname=output["first_name"],
-                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=IMAGE_FROM_ENV)
+                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=IMAGE_FROM_ENV , name=NAME_FROM_ENV)
 
 if __name__ == '__main__':
     # Check if background image is in environment variables
