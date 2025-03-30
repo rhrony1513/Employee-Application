@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
-RUN set -xe \
-    apt-get update -y && apt-get upgrade -y \
+RUN set -xe && \
+    apt-get update -y && apt-get upgrade -y && \
     apt-get install -y python3-pip mysql-client boto3 netcat iputils-ping
 
 COPY . /app
