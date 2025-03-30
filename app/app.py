@@ -26,19 +26,16 @@ db_conn = connections.Connection(
 def DownloadImage():
     if IMAGE_FROM_ENV:
         try:
-            # Parsing the S3 URL (Assuming IMAGE_FROM_ENV is like s3://bucket-name/object-key)
+            # Parse s3 url
             s3_url = IMAGE_FROM_ENV.strip()
-            
-            # You can use boto3 to download the image
             s3 = boto3.client('s3')
             
             # Extract bucket and key from the s3_url
-            # Assuming the URL is like s3://bucket-name/object-key
             parsed_url = s3_url.replace("s3://", "").split("/")
             bucket_name = parsed_url[0]
             object_key = "/".join(parsed_url[1:])
             
-            # Specify the local file path to save the image (in the static folder)
+            # Specify the local file path to save the image
             image_path = os.path.join(app.static_folder, 'bg-img.jpg')
             
             # Download the file from S3 to local static folder
