@@ -39,7 +39,7 @@ def DownloadImage():
             object_key = "/".join(parsed_url[1:])
             
             # Specify the local file path to save the image (in the static folder)
-            image_path = os.path.join(app.static_folder, 'default.jpg')
+            image_path = os.path.join(app.static_folder, 'bg-img.jpg')
             
             # Download the file from S3 to local static folder
             s3.download_file(bucket_name, object_key, image_path)
