@@ -7,7 +7,7 @@ services:
     depends_on:
       - db
     ports:
-      - ${APP_PORT}:8080
+      - ${APP_PORT}:81
     environment:
       DBHOST: ${DBHOST}
       DBUSER: ${DBUSER}
