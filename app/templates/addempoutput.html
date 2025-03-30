@@ -4,9 +4,9 @@
 <center>
 	<font color="DodgerBlue" size="5" style="font-family: avenir">
 		{% if image %}
-			<body style="background-image: url(./default.jpg);"></body>
+			<body style="background-image: url({{ url_for('static', filename='default.jpg') }});">
 		{% else %}
-			<body style="background: #c769d6aa;"></body>
+			<body style="background: #c769d6aa;">
 		{% endif %}
 			<h1>The employee {{ name }} wassuccessfully added to the database</h1><br>
 			<h2>The Employee has been added to the database</h2><br>

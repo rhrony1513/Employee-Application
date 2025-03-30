@@ -3,7 +3,8 @@ from pymysql import connections
 import os
 import random
 import argparse
-
+import boto3
+from botocore.exceptions import NoCredentialsError
 
 app = Flask(__name__)
 
@@ -11,19 +12,46 @@ DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
-IMAGE_FROM_ENV = os.environ.get('BG_IMG')
+IMAGE_FROM_ENV = os.environ.get('BG_IMG')  # S3 URL or S3 bucket and object key
 NAME_FROM_ENV = os.environ.get('NAMES')
 DBPORT = int(os.environ.get("DBPORT"))
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
-    host= DBHOST,
+    host=DBHOST,
     port=DBPORT,
-    user= DBUSER,
-    password= DBPWD, 
-    db= DATABASE
-    
+    user=DBUSER,
+    password=DBPWD,
+    db=DATABASE
 )
+
+def DownloadImage():
+    if IMAGE_FROM_ENV:
+        try:
+            # Parsing the S3 URL (Assuming IMAGE_FROM_ENV is like s3://bucket-name/object-key)
+            s3_url = IMAGE_FROM_ENV.strip()
+            
+            # You can use boto3 to download the image
+            s3 = boto3.client('s3')
+            
+            # Extract bucket and key from the s3_url
+            # Assuming the URL is like s3://bucket-name/object-key
+            parsed_url = s3_url.replace("s3://", "").split("/")
+            bucket_name = parsed_url[0]
+            object_key = "/".join(parsed_url[1:])
+            
+            # Specify the local file path to save the image (in the static folder)
+            image_path = os.path.join(app.static_folder, 'default.jpg')
+            
+            # Download the file from S3 to local static folder
+            s3.download_file(bucket_name, object_key, image_path)
+            print(f"Image successfully downloaded to {image_path}")
+        except NoCredentialsError:
+            print("Credentials not available for AWS S3.")
+        except Exception as e:
+            print(f"Error downloading image from S3: {str(e)}")
+    else:
+        print("No image URL set in the environment variable.")
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -41,13 +69,11 @@ def AddEmp():
     primary_skill = request.form['primary_skill']
     location = request.form['location']
 
-  
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-        
-        cursor.execute(insert_sql,(emp_id, first_name, last_name, primary_skill, location))
+        cursor.execute(insert_sql, (emp_id, first_name, last_name, primary_skill, location))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
 
@@ -61,7 +87,6 @@ def AddEmp():
 def GetEmp():
     return render_template("getemp.html", image=IMAGE_FROM_ENV)
 
-
 @app.route("/fetchdata", methods=['GET','POST'])
 def FetchData():
     emp_id = request.form['emp_id']
@@ -71,7 +96,7 @@ def FetchData():
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(select_sql,(emp_id))
+        cursor.execute(select_sql, (emp_id))
         result = cursor.fetchone()
         
         # Add No Employee found form
@@ -91,10 +116,11 @@ def FetchData():
                            lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=IMAGE_FROM_ENV)
 
 if __name__ == '__main__':
-    
     # Check if background image is in environment variables
     if IMAGE_FROM_ENV:
         print("Background image URL from environment variable =" + IMAGE_FROM_ENV)
+        # Download the image from the URL when the application starts
+        DownloadImage()
     else:
         print("No environment variable set for background image")
 

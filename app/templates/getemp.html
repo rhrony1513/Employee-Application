@@ -9,9 +9,9 @@
 		<h1 style="color: DodgerBlue">Employee Information</h1>
 
 		{% if image %}
-			<body style="background-image: url(./default.jpg);"></body>
+			<body style="background-image: url({{ url_for('static', filename='default.jpg') }});">
 		{% else %}
-			<body style="background: #c769d6aa;"></body>
+			<body style="background: #c769d6aa;">
 		{% endif %}
 
 			<form action="/fetchdata" autocomplete="on" method="POST">
