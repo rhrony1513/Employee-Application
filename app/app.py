@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request
 from pymysql import connections
 import os
-import random
-import argparse
 import boto3
 from botocore.exceptions import NoCredentialsError
 
