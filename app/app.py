@@ -10,8 +10,8 @@ DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
-IMAGE_FROM_ENV = os.environ.get('BG_IMG')  # S3 URL or S3 bucket and object key
-NAME_FROM_ENV = os.environ.get('NAMES')
+IMAGE_FROM_ENV = os.environ.get('APP_IMG')  # S3 URL or S3 bucket and object key
+NAME_FROM_ENV = os.environ.get('APP_NAMES')
 DBPORT = int(os.environ.get("DBPORT"))
 
 # Create a connection to the MySQL database
