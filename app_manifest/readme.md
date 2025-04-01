@@ -1,7 +1,7 @@
 # Deploy EKS Cluster
 
 ```
-kubectl apply -f eks_config.yaml
+eksctl create cluster -f eks_config.yaml
 ```
 # Create secret to authenticate ECR
 
