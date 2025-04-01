@@ -42,8 +42,10 @@ export APP_COLOR=blue
 ### Run the application, make sure it is visible in the browser
 ```docker run -p 8080:81  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
 
-### Running the application using using docker compose
+### Running the application using using docker compose (Ensure that both the db and app images have been built)
 ```
 Edit the .env file to reflect desired environment variables
 docker compose up -d
+OR
+docker-compose up -d
 ```
