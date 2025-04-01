@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: [ecr/repo]
+        image: [ecr/repo]  # Replace with your actual image repo
         ports:
         - containerPort: 81
         resources:
@@ -29,22 +29,57 @@ spec:
           - name: DBHOST
             valueFrom:
               configMapKeyRef:
-                name: app-config      # Name of the ConfigMap
-                key: DBHOST  
-          - name: APP_COLOR
+                name: app-config  # Name of the ConfigMap
+                key: DBHOST
+          - name: DATABASE
             valueFrom:
               configMapKeyRef:
-                name: app-config      # Name of the ConfigMap
-                key: APP_COLOR  
+                name: app-config  # Name of the ConfigMap
+                key: DATABASE 
+          - name: APP_NAMES
+            valueFrom:
+              configMapKeyRef:
+                name: app-config  # Name of the ConfigMap
+                key: APP_NAMES  
           - name: APP_IMG
             valueFrom:
               configMapKeyRef:
-                name: app-config      # Name of the ConfigMap
+                name: app-config  # Name of the ConfigMap
                 key: APP_IMG
           - name: APP_PORT
             valueFrom:
               configMapKeyRef:
-                name: app-config      # Name of the ConfigMap
+                name: app-config  # Name of the ConfigMap
                 key: APP_PORT
+          - name: AWS_DEFAULT_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: app-config  # Name of the ConfigMap
+                key: AWS_DEFAULT_REGION
+          - name: DBPWD
+            valueFrom:
+              secretKeyRef:
+                name: app-secrets  # Name of the Secret
+                key: DBPWD
+          - name: DBUSER
+            valueFrom:
+              secretKeyRef:
+                name: app-secrets  # Name of the Secret
+                key: DBUSER
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: app-secrets  # Name of the Secret
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: app-secrets  # Name of the Secret
+                key: AWS_SECRET_ACCESS_KEY
+          - name: AWS_SESSION_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: app-secrets  # Name of the Secret
+                key: AWS_SESSION_TOKEN
       imagePullSecrets:
-      - name: ecr-secret
+        - name: ecr-secret 
