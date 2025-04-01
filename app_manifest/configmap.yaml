@@ -6,8 +6,8 @@ metadata:
 data:
   DBHOST: "127.0.0.1"   # 
   DBPORT: "3306"
-  DATABASE: "employee"
-  APP_COLOR: "blue"
+  DATABASE: "employees"
+  APP_NAMES: "Aldo Alvarado, Rony De Leon, Minh Trung Nguyen"
   APP_IMG: "uri"
   APP_PORT: "81"
   
