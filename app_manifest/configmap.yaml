@@ -10,4 +10,4 @@ data:
   APP_NAMES: "Aldo Alvarado, Rony De Leon, Minh Trung Nguyen"
   APP_IMG: "uri"
   APP_PORT: "81"
-  
+  AWS_DEFAULT_REGION: "us-east-1"
