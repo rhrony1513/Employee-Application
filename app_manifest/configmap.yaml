@@ -4,7 +4,7 @@ metadata:
   name: app-config          # Name of the ConfigMap
   namespace: final        # Optional: Specify the namespace if not using "default"
 data:
-  DBHOST: "127.0.0.1"   # 
+  DBHOST: "db-svc"   # 
   DBPORT: "3306"
   DATABASE: "employees"
   APP_NAMES: "Aldo Alvarado, Rony De Leon, Minh Trung Nguyen"
