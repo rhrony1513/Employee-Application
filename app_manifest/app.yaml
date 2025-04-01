@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: [ecr/repo]  # Replace with your actual image repo
+        image: [ecr/repo]  # {"$imagepolicy": "flux-system:myapp"}
         ports:
         - containerPort: 81
         resources:
