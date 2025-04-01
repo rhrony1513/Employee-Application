@@ -19,7 +19,7 @@ flux bootstrap github \
   --owner=AlvaradoA \
   --repository=Employee-Application \
   --branch=main \
-  --path=./app \
+  --path=./app_manifest \
   --personal
 ```
 
@@ -31,3 +31,23 @@ Tell Flux to check repo every 1 minute. Apply changes found in ./app
 kubectl apply -f flux.yaml
 ```
 
+# Automate image updates to Git
+
+## Install Flux with the image automation components:
+
+```
+flux bootstrap github \
+  --components-extra=image-reflector-controller,image-automation-controller \
+  --owner=AlvaradoA \
+  --repository=Employee-Application \
+  --branch=main \
+  --path=./app_manifest \
+  --read-write-key \
+  --personal
+```
+
+## Create an ImageRepository to tell Flux which container registry to scan for new tags:
+
+```
+kubectl apply -f ImageRepo.yaml
+```
