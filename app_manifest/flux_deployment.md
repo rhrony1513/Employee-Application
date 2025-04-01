@@ -51,3 +51,23 @@ flux bootstrap github \
 ```
 kubectl apply -f ImageRepo.yaml
 ```
+
+## Create an ImagePolicy to tell Flux which semver range to use when filtering tags:
+
+image format shoule be image:1.x
+
+```
+kubectl apply -f ImagePolicy.yaml
+```
+
+## Create an ImageUpdateAutomation to tell Flux which Git repository to write image updates to:
+
+```
+kubectl apply -f ImageUpdate.yaml
+```
+
+## Wait for Flux to apply the latest commit on the cluster and verify that podinfo was updated
+
+```
+watch "kubectl get deployment/myapp -oyaml | grep 'image:'"
+```
