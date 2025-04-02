@@ -31,6 +31,11 @@ spec:
               configMapKeyRef:
                 name: app-config  # Name of the ConfigMap
                 key: DBHOST
+          - name: DBPORT
+            valueFrom:
+              configMapKeyRef:
+                name: app-config  # Name of the ConfigMap
+                key: DBPORT
           - name: DATABASE
             valueFrom:
               configMapKeyRef:
