@@ -39,6 +39,12 @@ flux bootstrap github \
 ### Create an ImageRepository to tell Flux which container registry to scan for new tags:
 
 ```
+kubectl create secret docker-registry ecr-secret \
+  --docker-server=[awsid].dkr.ecr.us-east-1.amazonaws.com \
+  --docker-username=AWS \
+  --docker-password=$(aws ecr get-login-password --region us-east-1) \
+  --namespace flux-system
+
 kubectl apply -f ImageRepo.yaml
 ```
 
