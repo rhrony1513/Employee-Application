@@ -14,14 +14,15 @@ IMAGE_FROM_ENV = os.environ.get('APP_IMG')  # S3 URL or S3 bucket and object key
 NAME_FROM_ENV = os.environ.get('APP_NAMES')
 DBPORT = int(os.environ.get("DBPORT"))
 
-# Create a connection to the MySQL database
-db_conn = connections.Connection(
-    host=DBHOST,
-    port=DBPORT,
-    user=DBUSER,
-    password=DBPWD,
-    db=DATABASE
-)
+# Function to get a fresh database connection
+def get_db_connection():
+    return connections.Connection(
+        host=DBHOST,
+        port=DBPORT,
+        user=DBUSER,
+        password=DBPWD,
+        db=DATABASE
+    )
 
 def DownloadImage():
     if IMAGE_FROM_ENV:
@@ -55,7 +56,7 @@ def home():
 @app.route("/about", methods=['GET','POST'])
 def about():
     return render_template('about.html', image=IMAGE_FROM_ENV, name=NAME_FROM_ENV)
-    
+
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
@@ -65,17 +66,20 @@ def AddEmp():
     location = request.form['location']
 
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
+    
+    # Create a fresh database connection for this request
+    db_conn = get_db_connection()
     cursor = db_conn.cursor()
 
     try:
         cursor.execute(insert_sql, (emp_id, first_name, last_name, primary_skill, location))
         db_conn.commit()
-        emp_name = "" + first_name + " " + last_name
-
+        emp_name = first_name + " " + last_name
     finally:
         cursor.close()
+        db_conn.close()  # Close the connection after use
 
-    print("all modification done...")
+    print("All modification done...")
     return render_template('addempoutput.html', empname=emp_name, image=IMAGE_FROM_ENV, name=NAME_FROM_ENV)
 
 @app.route("/getemp", methods=['GET', 'POST'])
@@ -88,27 +92,39 @@ def FetchData():
 
     output = {}
     select_sql = "SELECT emp_id, first_name, last_name, primary_skill, location from employee where emp_id=%s"
+    
+    # Create a fresh database connection for this request
+    db_conn = get_db_connection()
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(select_sql, (emp_id))
+        cursor.execute(select_sql, (emp_id,))
         result = cursor.fetchone()
         
-        # Add No Employee found form
-        output["emp_id"] = result[0]
-        output["first_name"] = result[1]
-        output["last_name"] = result[2]
-        output["primary_skills"] = result[3]
-        output["location"] = result[4]
-        
+        # The rest of your code, as it was
+        if result:
+            output["emp_id"] = result[0]
+            output["first_name"] = result[1]
+            output["last_name"] = result[2]
+            output["primary_skills"] = result[3]
+            output["location"] = result[4]
+        else:
+            output["error"] = "Employee not found"
     except Exception as e:
         print(e)
-
     finally:
         cursor.close()
+        db_conn.close()  # Close the connection after use
 
-    return render_template("getempoutput.html", id=output["emp_id"], fname=output["first_name"],
-                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], image=IMAGE_FROM_ENV , name=NAME_FROM_ENV)
+    return render_template("getempoutput.html", 
+                           id=output.get("emp_id", ""), 
+                           fname=output.get("first_name", ""), 
+                           lname=output.get("last_name", ""), 
+                           interest=output.get("primary_skills", ""), 
+                           location=output.get("location", ""),
+                           error=output.get("error", ""),
+                           image=IMAGE_FROM_ENV,
+                           name=NAME_FROM_ENV)
 
 if __name__ == '__main__':
     # Check if background image is in environment variables
@@ -119,4 +135,4 @@ if __name__ == '__main__':
     else:
         print("No environment variable set for background image")
 
-    app.run(host='0.0.0.0',port=81,debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)
