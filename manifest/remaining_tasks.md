@@ -11,7 +11,7 @@ access your S3 private bucket storing the background image
 - use secret
 4 - Bonus: add deployment automation with Flux.
 
-- I'm working on it
+- Done
 
 5. Deploy metric server fail, need to find another version
-- Stuck
+- Done
