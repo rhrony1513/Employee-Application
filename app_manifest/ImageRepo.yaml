@@ -6,5 +6,5 @@ metadata:
 spec:
   image: [ecr]/myapp
   interval: 1m
-    secretRef:
+  secretRef:
     name: ecr-secret
