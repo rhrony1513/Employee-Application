@@ -20,7 +20,7 @@ spec:
       volumes:
       - name: app-data
         persistentVolumeClaim:
-          claimName: ebs-claim
+          claimName: db-data
       containers:
       - name: app-db
         image: [ecr/repo]
