@@ -33,7 +33,7 @@ spec:
           - name: DBPWD
             valueFrom:
               secretKeyRef:
-                name: mysql-root-password  # Name of the Secret
+                name: app-secrets  # Name of the Secret
                 key: DBPWD   # Key in the Secret
       imagePullSecrets:
       - name: ecr-secret
