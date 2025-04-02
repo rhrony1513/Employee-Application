@@ -48,7 +48,8 @@ kubectl apply -f app.yaml
 ## Deploy Metric Server for HPA
 
 ```
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.7.2/components.yaml
+
 ```
 
 ## Deploy HPA
@@ -62,7 +63,7 @@ kubectl autoscale deployment myapp --cpu-percent=50 --min=1 --max=10 -n final
 ## Generate load
 
 ```
-kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://localhost:81; done"
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://[lb]:81; done"
 ```
 
 ## Monitor HPA
