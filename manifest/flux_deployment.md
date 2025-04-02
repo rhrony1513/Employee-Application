@@ -65,5 +65,5 @@ kubectl apply -f ImageUpdate.yaml
 ### Wait for Flux to apply the latest commit on the cluster and verify that podinfo was updated
 
 ```
-watch "kubectl get deployment/myapp -oyaml | grep 'image:'"
+watch "kubectl get deployment/myapp -n final -oyaml | grep 'image:'"
 ```
