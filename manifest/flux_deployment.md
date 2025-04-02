@@ -50,7 +50,7 @@ kubectl apply -f ImageRepo.yaml
 
 ### Create an ImagePolicy to tell Flux which semver range to use when filtering tags:
 
-image format shoule be image:1.x
+image format shoule be image:x
 
 ```
 kubectl apply -f ImagePolicy.yaml
