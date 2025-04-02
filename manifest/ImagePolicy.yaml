@@ -7,5 +7,5 @@ spec:
   imageRepositoryRef:
     name: myapp
   policy:
-    semver:
-      range: 1.x
+    numerical:
+      order: asc
