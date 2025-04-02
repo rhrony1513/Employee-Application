@@ -8,3 +8,11 @@ spec:
   interval: 1m
   secretRef:
     name: ecr-secret
+  ignore: |
+    # exclude all
+    /*
+    # include deploy dir
+    !/deploy
+    # exclude file extensions from deploy dir
+    /deploy/**/*.md
+    /deploy/**/*.txt 
