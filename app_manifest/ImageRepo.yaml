@@ -8,6 +8,3 @@ spec:
   interval: 1m
   secretRef:
     name: ecr-secret
-  ignore: |
-    # exclude file extensions from deploy dir
-    ./app_manifest/*.md 
