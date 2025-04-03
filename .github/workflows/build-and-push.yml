@@ -34,7 +34,7 @@ jobs:
 
         # Build Docker images for the app and database
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:my_app-v$IMAGE_TAG -f app/Dockerfile app
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:my_db-v$IMAGE_TAG -f db/Dockerfile_mysql db
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:my_db-v$IMAGE_TAG -f db/Dockerfile db
 
         # Create a Docker network (ignore error if already exists)
         docker network create -d bridge my_network || true
