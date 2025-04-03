@@ -38,7 +38,7 @@ jobs:
 
         # Create a Docker network (ignore error if already exists)
         docker network create -d bridge my_network || true
-        export DBPWD=${{ secrets.DB_PWD }}
+        export DBPWD=${{ secrets.DBPWD }}
         export ECR=$ECR_REGISTRY/$ECR_REPOSITORY
 
         # Deploy the database container
@@ -46,8 +46,8 @@ jobs:
         
         # Get the database container's IP address from the custom network
         export DBHOST=$(docker inspect -f '{{.NetworkSettings.Networks.my_network.IPAddress}}' my_db)
-        export DBPORT=${{ secrets.DB_PORT }}
-        export DBUSER=${{ secrets.DB_USER }}
+        export DBUSER=${{ secrets.DBUSER }}
+        export DBPORT=${{ secrets.DBPORT }}
 
         # Wait for the database to be ready
         until nc -z -v -w30 "$DBHOST" "$DBPORT"; do
