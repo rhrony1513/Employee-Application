@@ -3,6 +3,13 @@
 ```
 eksctl create cluster -f eks_config.yaml
 ```
+
+# Create EKS namespace
+
+```
+kubectl create ns final
+```
+
 # Create secret to authenticate ECR
 
 ```
