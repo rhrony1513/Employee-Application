@@ -33,8 +33,8 @@ jobs:
         ls -ltra
 
         # Build Docker images for the app and database
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:my_app-v$IMAGE_TAG -f app/Dockerfile app
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:my_db-v$IMAGE_TAG -f db/Dockerfile db
+        docker build -t $ECR_REGISTRY/myapp:$IMAGE_TAG -f app/Dockerfile app
+        docker build -t $ECR_REGISTRY/db:$IMAGE_TAG -f db/Dockerfile db
 
         # Create a Docker network (ignore error if already exists)
         docker network create -d bridge my_network || true
@@ -42,10 +42,10 @@ jobs:
         export ECR=$ECR_REGISTRY/$ECR_REPOSITORY
 
         # Deploy the database container
-        docker run -d --name my_db --network my_network -e MYSQL_ROOT_PASSWORD=$DBPWD $ECR:my_db-v$IMAGE_TAG
+        docker run -d --name db --network my_network -e MYSQL_ROOT_PASSWORD=$DBPWD $ECR/db:$IMAGE_TAG
         
         # Get the database container's IP address from the custom network
-        export DBHOST=$(docker inspect -f '{{.NetworkSettings.Networks.my_network.IPAddress}}' my_db)
+        export DBHOST=$(docker inspect -f '{{.NetworkSettings.Networks.my_network.IPAddress}}' db)
         export DBUSER=${{ secrets.DBUSER }}
         export DBPORT=${{ secrets.DBPORT }}
 
@@ -56,7 +56,7 @@ jobs:
         done
 
         # Deploy the app container when database is ready
-        docker run -d --name my_app --network my_network -p 81:81 -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e DBUSER=$DBUSER -e DBPWD=$DBPWD $ECR:my_app-v$IMAGE_TAG
+        docker run -d --name myapp --network my_network -p 81:81 -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e DBUSER=$DBUSER -e DBPWD=$DBPWD $ECR/myapp:$IMAGE_TAG
         
         docker ps
         echo "Pause for 5 seconds to ensure container is deployed"
@@ -66,5 +66,5 @@ jobs:
         curl localhost:81 -vvv
 
         # Push images to Amazon ECR
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY/myapp:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY/db:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:my_app-v$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:my_db-v$IMAGE_TAG
