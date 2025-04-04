@@ -48,8 +48,8 @@ kubectl apply -f services.yaml
 # Deploy app
 
 ```
-kubectl apply -f db.yaml
-kubectl apply -f app.yaml
+kubectl apply -f ./apps/db.yaml
+kubectl apply -f ./apps/app.yaml
 ```
 # HPA, autoscaling
 ## Deploy Metric Server for HPA
