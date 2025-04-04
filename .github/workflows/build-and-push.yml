@@ -66,5 +66,5 @@ jobs:
         curl localhost:81 -vvv
 
         # Push images to Amazon ECR
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:my_app-v$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:my_db-v$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY/myapp:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY/db:$IMAGE_TAG
