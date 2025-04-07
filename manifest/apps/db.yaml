@@ -23,7 +23,7 @@ spec:
           claimName: db-data
       containers:
       - name: app-db
-        image: [ecr/repo]
+        image: 418213695712.dkr.ecr.us-east-1.amazonaws.com/db:18
         volumeMounts:
         - name: app-data
           mountPath: /app/data
