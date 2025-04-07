@@ -44,7 +44,7 @@ jobs:
         docker run -d --name db --network my_network -e MYSQL_ROOT_PASSWORD=$DBPWD $ECR/db:$IMAGE_TAG
         
         # Get the database container's IP address from the custom network
-        export DBHOST=$(docker inspect -f '{{.NetworkSettings.Networks.my_network.IPAddress}}' my_db)
+        export DBHOST=$(docker inspect -f '{{.NetworkSettings.Networks.my_network.IPAddress}}' db)
         export DBUSER=${{ secrets.DBUSER }}
         export DBPORT=${{ secrets.DBPORT }}
 
