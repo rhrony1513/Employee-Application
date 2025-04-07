@@ -62,7 +62,7 @@ jobs:
         echo "Pause for 5 seconds to ensure container is deployed"
         sleep 8
 
-        # Test if the app is functionings
+        # Test if the app is functioning
         curl localhost:81 -vvv
 
         # Push images to Amazon ECR
