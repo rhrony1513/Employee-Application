@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 418213695712.dkr.ecr.us-east-1.amazonaws.com/myapp:18  # {"$imagepolicy": "flux-system:myapp"}
+        image: 418213695712.dkr.ecr.us-east-1.amazonaws.com/myapp:20 # {"$imagepolicy": "flux-system:myapp"}
         ports:
         - containerPort: 81
         resources:
@@ -26,65 +26,65 @@ spec:
           requests:
             cpu: 200m
         env:
-          - name: DBHOST
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: DBHOST
-          - name: DBPORT
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: DBPORT
-          - name: DATABASE
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: DATABASE 
-          - name: APP_NAMES
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: APP_NAMES  
-          - name: APP_IMG
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: APP_IMG
-          - name: APP_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: APP_PORT
-          - name: AWS_DEFAULT_REGION
-            valueFrom:
-              configMapKeyRef:
-                name: app-config  # Name of the ConfigMap
-                key: AWS_DEFAULT_REGION
-          - name: DBPWD
-            valueFrom:
-              secretKeyRef:
-                name: app-secrets  # Name of the Secret
-                key: DBPWD
-          - name: DBUSER
-            valueFrom:
-              secretKeyRef:
-                name: app-secrets  # Name of the Secret
-                key: DBUSER
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: app-secrets  # Name of the Secret
-                key: AWS_ACCESS_KEY_ID
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: app-secrets  # Name of the Secret
-                key: AWS_SECRET_ACCESS_KEY
-          - name: AWS_SESSION_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: app-secrets  # Name of the Secret
-                key: AWS_SESSION_TOKEN
+        - name: DBHOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: DBHOST
+        - name: DBPORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: DBPORT
+        - name: DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: DATABASE
+        - name: APP_NAMES
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: APP_NAMES
+        - name: APP_IMG
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: APP_IMG
+        - name: APP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: APP_PORT
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: app-config # Name of the ConfigMap
+              key: AWS_DEFAULT_REGION
+        - name: DBPWD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets # Name of the Secret
+              key: DBPWD
+        - name: DBUSER
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets # Name of the Secret
+              key: DBUSER
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets # Name of the Secret
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets # Name of the Secret
+              key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_SESSION_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets # Name of the Secret
+              key: AWS_SESSION_TOKEN
       imagePullSecrets:
-        - name: ecr-secret 
+      - name: ecr-secret
