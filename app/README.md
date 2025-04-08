@@ -1,4 +1,4 @@
-Update 7-4-2025..
+Update 7-4-2025..00
 # Install the required MySQL package
 
 sudo apt-get update -y
