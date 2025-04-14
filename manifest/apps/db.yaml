@@ -26,7 +26,7 @@ spec:
         image: 418213695712.dkr.ecr.us-east-1.amazonaws.com/db:18
         volumeMounts:
         - name: app-data
-          mountPath: /app/data
+          mountPath: /var/lib/mysql
         ports:
         - containerPort: 3306
         env:
